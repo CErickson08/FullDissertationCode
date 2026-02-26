@@ -8,7 +8,6 @@ library(ragg)
 library(nlme)
 library(performance)
 library(emmeans)
-library(lme4)
 
 dc_2011 <- read.csv("C:/Users/chayl/OneDrive - Swansea University/Documents/Biology Yr3/Dissertation/Data/Water Sampling/EA_DC_2011_complete.csv", header = T)
 dc_2012 <- read.csv("C:/Users/chayl/OneDrive - Swansea University/Documents/Biology Yr3/Dissertation/Data/Water Sampling/EA_DC_2012_complete.csv", header = T)
@@ -1829,4 +1828,5 @@ ggplot(rel_abund_cober_top_genus, aes(x = Location, y = rel_abund, fill = Genus)
   theme_bw() +
   theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()) +
   scale_fill_manual(values = genus_colours)
+
 
