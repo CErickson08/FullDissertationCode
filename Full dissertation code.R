@@ -34,7 +34,7 @@ write.csv(bound, file = "bound.csv", row.names = F)
 bound <- read.csv("C:/Users/chayl/OneDrive - Swansea University/Documents/Biology Yr3/Dissertation/Data/Project Data/bound.csv", header = T)
 
 #####################################################################
-# FILTER: Keep relevant sample type + select metal determinands
+# FILTER: Keep relevant sample type and select metal determinands #
 #####################################################################
 
 RIVER <- bound[grep("RIVER / RUNNING SURFACE WATER", bound$sample.sampledMaterialType.label), ]
@@ -83,7 +83,7 @@ CoRIDs <- CoR$ID
 Cober_RIVER <- RIVER_metals[grepl(paste(CoRIDs, collapse="|"), RIVER_metals$sample.samplingPoint.notation), ]
 
 ###############################################################################
-# BASELINES: Compute minimum “baseline” value per metal per catchment
+# BASELINES: Compute minimum baseline value per metal per catchment ###########
 ###############################################################################
 
 # For each river, for each metal:
@@ -430,9 +430,9 @@ baseline_tbl_cober <- tibble::tribble(
   "Nickel - Ni",  1,
   "Zinc - as Zn", 14.9)
 
-###############################################################################
-#PREP METALS: Parse results, bin Month into seasons, and recode Location names
-###############################################################################
+#####################
+# ## PREP METALS ####
+#####################
 
 hayle_metals_prepped <- RIVER_Hayle %>%
   mutate(result = parse_number(as.character(result)),
@@ -501,9 +501,9 @@ cober_metals_prepped <- Cober_RIVER %>%
   select(Location, Month, determinand.label, result, everything())
 
 
-#################################################
-# Read alpha diversity + sample metadata + merge
-#################################################
+#########################################################
+## Read alpha diversity  and sample metadata and merge ##
+#########################################################
 
 # Read in alpha diversity results table
 alpha <- read.table("C:/Users/chayl/OneDrive - Swansea University/Documents/Biology Yr3/Dissertation/Data/Project Data/16S_project_data_June25/alpha_results.text", 
@@ -531,9 +531,9 @@ alphadf <- merge(alpha, samples_metadata, by = "SampleID") # Make one big datase
 head(alphadf) 
 
 
-###############################################################################
-# BUILD METALS WIDE TABLES: Location × Month grid + fill missing with baseline
-###############################################################################
+############################
+# BUILD METALS WIDE TABLES #
+############################
 
 # Get the Location × Month combinations that exist in data for Hayle
 hayle_grid_LM <- alphadf %>% filter(Catchment == "Hayle") %>% distinct(Location, Month)
@@ -625,7 +625,7 @@ carnon_metals_wide <- rename_metals(carnon_metals_wide)
 cober_metals_wide <- rename_metals(cober_metals_wide)
 
 ###############################################################################
-# JOIN METALS INTO METADATA: Split by catchment, join by Location × Month
+### JOIN METALS INTO METADATA: Split by catchment, join by Location × Month ##
 ###############################################################################
 
 alphadf_Hayle <- alphadf %>%
@@ -1828,5 +1828,6 @@ ggplot(rel_abund_cober_top_genus, aes(x = Location, y = rel_abund, fill = Genus)
   theme_bw() +
   theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()) +
   scale_fill_manual(values = genus_colours)
+
 
 
